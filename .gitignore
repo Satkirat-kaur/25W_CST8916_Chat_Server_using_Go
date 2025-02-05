@@ -1,0 +1,20 @@
+# Exclude compiled binaries
+*.exe
+*.out
+*.app
+
+# Exclude Go build artifacts
+/bin/
+/pkg/
+
+# Exclude local environment files
+.env
+
+# Exclude editor-specific settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Exclude vendor directory (if using Go Modules)
+vendor/

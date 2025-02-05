@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset default margin and padding, apply a global font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Style for the body to center the chat window */
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        /* Chat container with fixed width and height */
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+
+        /* Header section of the chat app */
+        .header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header h2 {
+            color: #111827;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* Messages container with scrolling enabled */
+        .messages-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Individual message styling */
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #111827;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Alternate background colors for messages */
+        .message:nth-child(odd) {
+            background: #f3f4f6;
+        }
+
+        .message:nth-child(even) {
+            background: #cde7ff;
+        }
+
+        /* Warning message styling */
+        .message.warning {
+            background: #ffcccc;
+            color: #b22222;
+            font-weight: bold;
+        }
+
+        /* Sent message alignment and styling */
+        .message.sent {
+            align-self: flex-end;
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* Input container with spacing */
+        .input-container {
+            padding: 20px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Text input styling */
+        .message-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        /* Highlight input on focus */
+        .message-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Send button styling */
+        .send-button {
+            padding: 12px 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        /* Send button hover effect */
+        .send-button:hover {
+            background: #2563eb;
+        }
+
+        /* Animation for fading in messages */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h2>WebSocket Chat</h2>
+        </div>
+        <div class="messages-container" id="messages"></div>
+        <div class="input-container">
+            <input type="text" class="message-input" id="messageInput" placeholder="Type a message..." 
+                   onkeydown="if(event.key === 'Enter') sendMessage()">
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Establish a WebSocket connection to the server
+        let ws = new WebSocket("ws://localhost:8080/ws");
+        const messagesContainer = document.getElementById('messages');
+    
+        // Handle incoming WebSocket messages
+        ws.onmessage = function(event) {
+            const msg = document.createElement('div'); // Create a new message div
+            msg.className = 'message'; // Apply default message styling
+            msg.innerText = event.data; // Set the message text
+            
+            // If the message contains a warning, apply warning styling
+            if (event.data.includes("Warning")) {
+                msg.classList.add('warning');
+            }
+            
+            // Append message to chat container and scroll to the bottom
+            messagesContainer.appendChild(msg);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
+    
+        // Function to send a message through WebSocket
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            if (input.value.trim()) { // Prevent sending empty messages
+                ws.send(input.value); // Send message to WebSocket server
+                input.value = ''; // Clear input field after sending
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
