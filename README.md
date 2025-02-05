@@ -96,3 +96,33 @@ What's the crap weather today?
 - Goroutine usage for broadcasting
 - Message filtering techniques
 - Client-server WebSocket communication
+
+## Exercises
+1. Identify Key Components:
+   - Explain the purpose of Gin in this project.
+   - Describe how WebSocket connections are handled.
+
+2. Modify the Code:
+   - Add a new banned word to the filter list.
+   - Modify the server to log all received messages.
+
+3. Extend the Functionality:
+   - Allow users to send their name along with messages.
+   - Implement a feature to allow clients to disconnect gracefully.
+
+4. Understanding Goroutines:
+   - Explain how goroutines are used in the project.
+   - Modify the broadcast function to include a delay and observe the effect.
+   - Implement a new goroutine that periodically logs the number of connected clients.
+
+5. Debugging Exercise:
+   - Intentionally introduce an error in the server code and debug it.
+
+6. Testing Variations:
+   - Use Postman to send WebSocket messages and analyze the responses.
+   - Observe what happens when multiple clients connect and send messages simultaneously.
+
+7. Rewriting in a Different Language:
+   - Try implementing the WebSocket server in another programming language such as Python, JavaScript (Node.js), or Java.
+   - Compare the implementation differences between Go and the chosen language.
+   - Discuss the advantages and disadvantages of Go for real-time WebSocket applications.
