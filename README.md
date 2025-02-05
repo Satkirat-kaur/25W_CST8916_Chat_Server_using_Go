@@ -19,7 +19,7 @@ This guide will help you set up and understand a simple WebSocket chat server us
 ## 🚀 Setup Instructions
 ### 1. Install Go
 ```
-wget https://go.dev/dl/go1.19.4.linux-amd64.tar.gz
+wget https://go.dev/dl/go1.23.6.linux-amd64.tar.gz
 ```
 ```
 sudo tar -C /usr/local -xzf go1.23.6.linux-amd64.tar.gz
