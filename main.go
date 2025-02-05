@@ -46,12 +46,13 @@ func handleWebSocket(c *gin.Context) {
 
 	// Add client to the clients map
 	clients[conn] = true
+	fmt.Printf("New client connected: %v | Total clients: %d\n", conn.RemoteAddr(), len(clients))
 
 	// Keep listening for messages from this WebSocket connection
 	for {
 		_, msg, err := conn.ReadMessage() // Read incoming message
 		if err != nil {
-			fmt.Println("Client disconnected:", err)
+			fmt.Printf("Client disconnected: %v | Total clients: %d\n", conn.RemoteAddr(), len(clients)-1)
 			delete(clients, conn) // Remove client from map
 			break
 		}
@@ -74,6 +75,7 @@ func broadcastMessages() {
 				fmt.Println("Error writing message:", err)
 				client.Close()
 				delete(clients, client) // Remove unresponsive client
+				fmt.Printf("Client removed due to error: %v | Total clients: %d\n", client.RemoteAddr(), len(clients))
 			}
 		}
 	}
