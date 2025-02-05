@@ -17,18 +17,32 @@ This guide will help you set up and understand a simple WebSocket chat server us
 4. [Postman](https://www.postman.com/downloads/) (for testing)
 
 ## 🚀 Setup Instructions
-### 1. Clone or create the project directory
+### 1. Install Go
 ```
-git clone <repo-url>
+wget https://go.dev/dl/go1.19.4.linux-amd64.tar.gz
+```
+```
+sudo tar -C /usr/local -xzf go1.23.6.linux-amd64.tar.gz
+```
+```
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+```
+```
+source ~/.bashrc
 ```
 
-### 2. Install Dependencies
+### 2. Clone or create the project directory
+```
+git clone https://github.com/ramymohamed10/25W_CST8916_Chat_Server_using_Go
+```
+
+### 3. Install Dependencies
 In VS Code terminal:
 ```bash
 go mod tidy
 ```
 
-### 3. Run the Server
+### 4. Run the Server
 ```bash
 go run main.go
 ```
