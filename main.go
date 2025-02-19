@@ -21,7 +21,7 @@ var clients = make(map[*websocket.Conn]bool)
 var broadcast = make(chan string)
 
 // List of banned words that should be filtered from messages
-var bannedWords = []string{"damn", "crap"}
+var bannedWords = []string{"damn", "crap", "stupid"}
 
 // filterMessage checks if a message contains banned words and replaces them with a warning
 func filterMessage(msg string) string {
